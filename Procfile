@@ -1,0 +1,1 @@
+web: gunicorn app.ccldb_dash_msgfreqs:'provide_app()'
