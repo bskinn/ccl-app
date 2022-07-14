@@ -229,9 +229,6 @@ def update_day_page_anchor_text(detail_data):
 
 
 
-def provide_app():
-    return app
-
 
 
 if __name__ == "__main__":

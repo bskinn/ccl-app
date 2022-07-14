@@ -11,7 +11,7 @@ $ git clone https://github.com/bskinn/ccldb-dash-msgfreqs
 $ python3.10 -m venv env
 $ source env/bin/activate
 $ python -m pip install -r requirements.txt
-$ python app/ccldb_dash_msgfreqs.py
+$ python ccldb_dash_msgfreqs/app.py
 ```
 
 Python will work for a while, and then provide you with a link.
