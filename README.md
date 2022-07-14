@@ -17,3 +17,9 @@ $ python ccldb_dash_msgfreqs/app.py
 Python will work for a while, and then provide you with a link.
 Browse to this link to view the app. When done, use Ctrl+C to
 kill the app's server.
+
+
+## Notes
+
+Syntax for the `gunicorn` call and server factory function from:
+https://fizzy.cc/deploy-dash-on-server/

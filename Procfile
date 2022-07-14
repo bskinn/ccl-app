@@ -1,1 +1,1 @@
-web: gunicorn ccldb_dash_msgfreqs:'provide_app()'
+web: gunicorn ccldb_dash_msgfreqs:'get_appserver()'
