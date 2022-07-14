@@ -21,5 +21,9 @@ kill the app's server.
 
 ## Notes
 
+Heroku infrastructure adapted (and significantly reduced from)
+the Heroku tutorial here:
+https://devcenter.heroku.com/articles/flask-memcache
+
 Syntax for the `gunicorn` call and server factory function from:
 https://fizzy.cc/deploy-dash-on-server/
