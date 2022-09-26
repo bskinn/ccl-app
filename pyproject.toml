@@ -1,0 +1,20 @@
+[build-system]
+requires = ["wheel", "setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 88
+include = '''
+(
+    ^/app[.]py
+  | ^/pages/.+[.]py
+)
+'''
+exclude = '''
+(
+    __pycache__
+  | ^/[.]
+  | ^/doc
+  | ^/env
+)
+'''

@@ -52,9 +52,15 @@ dash.register_page(__name__)
 The data is hosted on Google Drive. These links point directly to CSV files of the yearly, monthly and daily message frequencies for CCL.
 """
 
-df_yearly = pd.read_csv("https://drive.google.com/uc?id=19jZ62cQBMvoqQMHyzglsH-_r3JbF8KBQ")
-df_monthly = pd.read_csv("https://drive.google.com/uc?id=1PHc1eGwOC6Bb1rPH1yL7tEuxVQH_DJ-m")
-df_daily = pd.read_csv("https://drive.google.com/uc?id=1NpsgvbUjI_ahOy7z_n7RWeT_UOiTKK2v")
+df_yearly = pd.read_csv(
+    "https://drive.google.com/uc?id=19jZ62cQBMvoqQMHyzglsH-_r3JbF8KBQ"
+)
+df_monthly = pd.read_csv(
+    "https://drive.google.com/uc?id=1PHc1eGwOC6Bb1rPH1yL7tEuxVQH_DJ-m"
+)
+df_daily = pd.read_csv(
+    "https://drive.google.com/uc?id=1NpsgvbUjI_ahOy7z_n7RWeT_UOiTKK2v"
+)
 # df_monthly.tail()
 
 """# Add 'Date' Columns to Monthly and Daily Data
@@ -71,11 +77,21 @@ COL_DATE = "date"
 
 """## Add the 'date' columns"""
 
-df_monthly[COL_DATE] = pd.to_datetime(pd.concat([df_monthly[["year", "month"]], pd.DataFrame(np.ones(len(df_monthly.index), dtype=int), columns=["day"])], axis="columns"))
+df_monthly[COL_DATE] = pd.to_datetime(
+    pd.concat(
+        [
+            df_monthly[["year", "month"]],
+            pd.DataFrame(np.ones(len(df_monthly.index), dtype=int), columns=["day"]),
+        ],
+        axis="columns",
+    )
+)
 df_daily[COL_DATE] = pd.to_datetime(df_daily[["year", "month", "day"]])
 
-d = df_daily.iloc[0]['date']
-pd.Timestamp(year=d.year, month=d.month, day=calendar.monthrange(year=d.year, month=d.month)[1])
+d = df_daily.iloc[0]["date"]
+pd.Timestamp(
+    year=d.year, month=d.month, day=calendar.monthrange(year=d.year, month=d.month)[1]
+)
 
 """# Create the Dash app
 
@@ -96,24 +112,28 @@ OPEN_DAY_ANCHOR = "msgfreqs-open-day-anchor"
 
 """## Define functions that create the figures"""
 
+
 def create_empty_graph():
     return px.scatter()
+
 
 def create_high_level_graph():
     return px.bar(df_monthly, x="date", y="count")
 
+
 """## Define helper functions for the app callbacks"""
+
 
 def get_lowest_date_info(selected_data):
     """Supply year, month, day for the earliest date in selected_data.
-    
+
     () --> tuple[Optional[int], Optional[int], Optional[int]]
-    
+
     (year, month, day)
 
     selected_data is of the type returned by an `Input(..., "selectedData")`
     callback.
-    
+
     """
     try:
         pts = selected_data["points"]
@@ -128,35 +148,45 @@ def get_lowest_date_info(selected_data):
     else:
         return None, None, None
 
+
 """## Define the app"""
 
 # Create app and app layout
 # app = Dash("ccl-db-message-frequencies")
-layout = dhtml.Div([
-    dhtml.H1("CCL.NET Message Posting Frequency"),
-    dhtml.Div([
-        dhtml.P("Hover over a chart to show controls."),
-        dhtml.P(
-            "Zoom (magnifying glass) and pan (up/down/left/right arrow) "
-            "to the area of interest, then select a range of bars "
-            "(dotted rectangle) to populate the posts-per-day chart below."
-        )]),
-    dhtml.H2("Posts Per Month (Full Archive)"),
-    dcc.Graph(id=HIGH_LEVEL_GRAPH, figure=create_high_level_graph()),
-    dhtml.H2("Posts Per Day (Selected Range)"),
-    dhtml.Div([
-        dhtml.P("Use the same zoom/pan/select controls as above."),
-        dhtml.P(
-            "After selecting some data, clicking the link below "
-            "will take you to the day page on CCL for the first day "
-            "in that range."
+layout = dhtml.Div(
+    [
+        dhtml.H1("CCL.NET Message Posting Frequency"),
+        dhtml.Div(
+            [
+                dhtml.P("Hover over a chart to show controls."),
+                dhtml.P(
+                    "Zoom (magnifying glass) and pan (up/down/left/right arrow) "
+                    "to the area of interest, then select a range of bars "
+                    "(dotted rectangle) to populate the posts-per-day chart below."
+                ),
+            ]
         ),
-    ]),
-    dhtml.Div([
-        dhtml.A("App loading...", id=OPEN_DAY_ANCHOR, target="_blank", href=""),
-    ]),
-    dcc.Graph(id=DETAILED_GRAPH, figure=create_empty_graph()),
-])
+        dhtml.H2("Posts Per Month (Full Archive)"),
+        dcc.Graph(id=HIGH_LEVEL_GRAPH, figure=create_high_level_graph()),
+        dhtml.H2("Posts Per Day (Selected Range)"),
+        dhtml.Div(
+            [
+                dhtml.P("Use the same zoom/pan/select controls as above."),
+                dhtml.P(
+                    "After selecting some data, clicking the link below "
+                    "will take you to the day page on CCL for the first day "
+                    "in that range."
+                ),
+            ]
+        ),
+        dhtml.Div(
+            [
+                dhtml.A("App loading...", id=OPEN_DAY_ANCHOR, target="_blank", href=""),
+            ]
+        ),
+        dcc.Graph(id=DETAILED_GRAPH, figure=create_empty_graph()),
+    ]
+)
 
 # Callback for populating the detailed plot
 @callback(
@@ -180,7 +210,7 @@ def set_detail_figure(hi_data):
         md = pd.Timestamp(
             year=md.year,
             month=md.month,
-            day=calendar.monthrange(year=md.year, month=md.month)[1]
+            day=calendar.monthrange(year=md.year, month=md.month)[1],
         )
         max_date = f"{md.year}-{md.month:0>2}-{md.day:0>2}"
 
@@ -189,7 +219,7 @@ def set_detail_figure(hi_data):
         # whenever no selection has been made
         min_date = 0
         max_date = 1
-  
+
     df = df_daily[df_daily["date"] >= min_date]
     df = df[df["date"] <= max_date]
 
@@ -223,6 +253,7 @@ def update_day_page_anchor_text(detail_data):
     else:
         return dhtml.Em("(Nothing selected)")
 
+
 """## Display the app"""
 
 # print("Click the below '127.0.0.1' link to launch the app.\n")
@@ -232,7 +263,5 @@ def update_day_page_anchor_text(detail_data):
 # layout = app.layout
 
 
-
 # if __name__ == "__main__":
 #     app.run()
-    
