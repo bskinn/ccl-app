@@ -41,9 +41,11 @@ import datetime
 import numpy as np
 import pandas as pd
 import plotly.express as px
-from dash import Dash, dcc, html as dhtml
+import dash
+from dash import callback, Dash, dcc, html as dhtml
 from dash.dependencies import Input, Output, State
-# from jupyter_dash import JupyterDash
+
+dash.register_page(__name__)
 
 """# Retrieve Data
 
@@ -84,11 +86,11 @@ Dash lets you create visualization dashboards with interconnected controls and p
 Instead of using explicit strings to name and refer to all of the pieces of the app, we'll define string constants for these names. That way, if we want to change the name of a component for some reason, we only have to change it in once place.
 """
 
-APP_NAME = "ccl-db-message-frequencies"
-HIGH_LEVEL_GRAPH = "high-level-graph"
-DETAILED_GRAPH = "detailed-graph"
+# APP_NAME = "ccl-db-message-frequencies"
+HIGH_LEVEL_GRAPH = "msgfreqs-high-level-graph"
+DETAILED_GRAPH = "msgfreqs-detailed-graph"
 # OPEN_DAY_BUTTON = "open-day-button"
-OPEN_DAY_ANCHOR = "open-day-anchor"
+OPEN_DAY_ANCHOR = "msgfreqs-open-day-anchor"
 
 # OPEN_DAY_TEMPLATE = "Open {} on CCL"
 
@@ -129,8 +131,8 @@ def get_lowest_date_info(selected_data):
 """## Define the app"""
 
 # Create app and app layout
-app = Dash("ccl-db-message-frequencies")
-app.layout = dhtml.Div([
+# app = Dash("ccl-db-message-frequencies")
+layout = dhtml.Div([
     dhtml.H1("CCL.NET Message Posting Frequency"),
     dhtml.Div([
         dhtml.P("Hover over a chart to show controls."),
@@ -157,7 +159,7 @@ app.layout = dhtml.Div([
 ])
 
 # Callback for populating the detailed plot
-@app.callback(
+@callback(
     Output(DETAILED_GRAPH, "figure"),
     Input(HIGH_LEVEL_GRAPH, "selectedData"),
 )
@@ -195,7 +197,7 @@ def set_detail_figure(hi_data):
 
 
 # Callback for updating the outbound day-page anchor href
-@app.callback(
+@callback(
     Output(OPEN_DAY_ANCHOR, "href"),
     Input(DETAILED_GRAPH, "selectedData"),
 )
@@ -209,7 +211,7 @@ def update_day_page_anchor_href(detail_data):
 
 
 # Callback for updating the outbound day-page anchor text
-@app.callback(
+@callback(
     Output(OPEN_DAY_ANCHOR, "children"),
     Input(DETAILED_GRAPH, "selectedData"),
 )
@@ -227,10 +229,10 @@ def update_day_page_anchor_text(detail_data):
 # app.run_server(mode="inline", host="localhost", port=2185)
 
 
+# layout = app.layout
 
 
 
-
-if __name__ == "__main__":
-    app.run()
+# if __name__ == "__main__":
+#     app.run()
     
