@@ -1,4 +1,4 @@
-from ccldb_dash_msgfreqs.app import app
+from ccl_app.msgfreqs.app import app
 
 
 def get_appserver():
