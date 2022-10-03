@@ -1,14 +1,16 @@
 import dash
+import dash_bootstrap_components as dbc
 from dash import Dash, html as dhtml
 
-external_scripts = ["https://tailwindcss.com/", {"src": "https://cdn.tailwindcss.com"}]
 
-app = Dash(__name__, use_pages=True, external_scripts=external_scripts)
+app = Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.COSMO])
+
 
 HEADER_SECTION = "layout-header"
 BODY_SECTION = "layout-body"
 
 HEADER_HOME_LINK = "header-home-link"
+
 
 app.layout = dhtml.Div(
     [
@@ -19,14 +21,11 @@ app.layout = dhtml.Div(
                     id=HEADER_HOME_LINK,
                     href="/",
                     children="Home",
-                    className="text-blue-700 visited:text-purple-700 hover:bg-gray-200",
-                )  # TODO: Refactor project into package and add module with classNames
+                )
             ],
-            className="pb-4",
         ),
         dhtml.Div(id=BODY_SECTION, children=dash.page_container),
     ],
-    className="p-4",
 )
 
 

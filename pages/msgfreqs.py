@@ -44,8 +44,11 @@ import plotly.express as px
 import dash
 from dash import callback, Dash, dcc, html as dhtml
 from dash.dependencies import Input, Output, State
+from dash_bootstrap_templates import load_figure_template
 
 dash.register_page(__name__)
+
+load_figure_template("COSMO")
 
 """# Retrieve Data
 
