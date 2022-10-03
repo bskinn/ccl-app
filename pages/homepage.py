@@ -16,7 +16,7 @@ layout = dcc.Markdown(
     *Information page links will go here at some point.*
     
     ## Exploration/Analysis
-    [Message Posting Frequencies](/msgfreqs)
+    [Message Posting Frequencies](/analysis/msgfreqs)
     
     """
     ),
