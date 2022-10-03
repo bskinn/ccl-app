@@ -1,7 +1,7 @@
 from textwrap import dedent
 
 import dash
-from dash import callback, Dash, dcc, html as dhtml
+from dash import dcc
 
 
 dash.register_page(__name__, path="/")
