@@ -3,7 +3,7 @@ from dash import Dash, html as dhtml
 
 external_scripts = ["https://tailwindcss.com/", {"src": "https://cdn.tailwindcss.com"}]
 
-app = Dash("ccl-app", use_pages=True, external_scripts=external_scripts)
+app = Dash(__name__, use_pages=True, external_scripts=external_scripts)
 
 HEADER_SECTION = "layout-header"
 BODY_SECTION = "layout-body"
