@@ -11,3 +11,12 @@ Analysis apps include:
 
 *(more description to come)*
 
+
+
+## To Install & Run
+
+```
+$ {make & activate a venv}
+$ python -m pip install -r requirements.txt
+$ python -m ccl_app
+```

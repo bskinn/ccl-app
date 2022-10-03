@@ -1,9 +1,16 @@
 import dash
 from dash import Dash, html as dhtml
 
+from ccl_app import styles
+
 external_scripts = ["https://tailwindcss.com/", {"src": "https://cdn.tailwindcss.com"}]
 
-app = Dash("ccl-app", use_pages=True, external_scripts=external_scripts)
+app = Dash(
+    "ccl-app",
+    use_pages=True,
+    pages_folder="ccl_app/pages",
+    external_scripts=external_scripts,
+)
 
 HEADER_SECTION = "layout-header"
 BODY_SECTION = "layout-body"
@@ -19,7 +26,7 @@ app.layout = dhtml.Div(
                     id=HEADER_HOME_LINK,
                     href="/",
                     children="Home",
-                    className="text-blue-700 visited:text-purple-700 hover:bg-gray-200",
+                    className=styles.TEXT_LINK,
                 )  # TODO: Refactor project into package and add module with classNames
             ],
             className="pb-4",
