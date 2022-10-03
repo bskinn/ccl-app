@@ -13,7 +13,7 @@ layout = dcc.Markdown(
     # CCL Information and Exploration App
     
     ## Information
-    *Information page links will go here at some point.*
+    [Extracting Data from CCL Pages](/info/extract)
     
     ## Exploration/Analysis
     [Message Posting Frequencies](/analysis/msgfreqs)
