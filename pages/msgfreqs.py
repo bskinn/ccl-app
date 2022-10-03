@@ -36,14 +36,13 @@ We need `datetime`, `calendar`, `pandas`, `plotly`, `dash`, and `jupyter_dash`.
 """
 
 import calendar
-import datetime
 
 import numpy as np
 import pandas as pd
 import plotly.express as px
 import dash
-from dash import callback, Dash, dcc, html as dhtml
-from dash.dependencies import Input, Output, State
+from dash import callback, dcc, html as dhtml
+from dash.dependencies import Input, Output
 from dash_bootstrap_templates import load_figure_template
 
 dash.register_page(__name__)
@@ -56,13 +55,13 @@ The data is hosted on Google Drive. These links point directly to CSV files of t
 """
 
 df_yearly = pd.read_csv(
-    "https://drive.google.com/uc?id=19jZ62cQBMvoqQMHyzglsH-_r3JbF8KBQ"
+    "data/yearly.csv"
 )
 df_monthly = pd.read_csv(
-    "https://drive.google.com/uc?id=1PHc1eGwOC6Bb1rPH1yL7tEuxVQH_DJ-m"
+    "data/monthly.csv"
 )
 df_daily = pd.read_csv(
-    "https://drive.google.com/uc?id=1NpsgvbUjI_ahOy7z_n7RWeT_UOiTKK2v"
+    "data/daily_w_zeroes.csv"
 )
 # df_monthly.tail()
 
