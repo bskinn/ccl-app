@@ -49,10 +49,10 @@ layout = [
     dhtml.Br(),
     dhtml.Div(
         [
-            dhtml.Span("Name: "),
+            dhtml.Span(dhtml.B("Name: ")),
             dhtml.Span(id=OUTPUT_SENDER_NAME, children="John Doe"),
             dhtml.Br(),
-            dhtml.Span("Email: "),
+            dhtml.Span(dhtml.B("Email: ")),
             dhtml.Span(id=OUTPUT_SENDER_EMAIL, children="jdoe^^example.com"),
             dhtml.Br(),
             dhtml.Br(),

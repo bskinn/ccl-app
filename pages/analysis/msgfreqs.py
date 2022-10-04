@@ -27,6 +27,7 @@ of the functionality of the underlying tooling.
 """
 
 import calendar
+from textwrap import dedent
 
 import dash
 import pandas as pd
@@ -110,40 +111,46 @@ def get_lowest_date_info(selected_data):
         return None, None, None
 
 
-layout = dhtml.Div(
-    [
-        dhtml.H1("CCL.NET Message Posting Frequency"),
-        dhtml.Div(
-            [
-                dhtml.P("Hover over a chart to show controls."),
-                dhtml.P(
-                    "Zoom (magnifying glass) and pan (up/down/left/right arrow) "
-                    "to the area of interest, then select a range of bars "
-                    "(dotted rectangle) to populate the posts-per-day chart below."
-                ),
-            ]
+layout = [
+    dcc.Markdown(
+        id="body-block-1",
+        children=dedent(
+            """
+            # CCL.NET Message Posting Frequency
+
+            Hover over a chart to show controls.
+
+            Zoom (magnifying glass) and pan (up/down/left/right arrow) to the
+            area of interest, then select a range of bars (dotted rectangle) to
+            populate the posts-per-day chart below.
+
+            ## Posts Per Month (Full Archive)
+
+            """
         ),
-        dhtml.H2("Posts Per Month (Full Archive)"),
-        dcc.Graph(id=HIGH_LEVEL_GRAPH, figure=create_high_level_graph()),
-        dhtml.H2("Posts Per Day (Selected Range)"),
-        dhtml.Div(
-            [
-                dhtml.P("Use the same zoom/pan/select controls as above."),
-                dhtml.P(
-                    "After selecting some data, clicking the link below "
-                    "will take you to the day page on CCL for the first day "
-                    "in that range."
-                ),
-            ]
+    ),
+    dcc.Graph(id=HIGH_LEVEL_GRAPH, figure=create_high_level_graph()),
+    dcc.Markdown(
+        id="body-block-2",
+        children=dedent(
+            """
+            ## Posts Per Day (Selected Range)
+
+            Use the same zoom/pan/select controls as above.
+
+            After selecting some data, clicking the link below will take you to
+            the day page on CCL for the first day in that range.
+
+            """
         ),
-        dhtml.Div(
-            [
-                dhtml.A("App loading...", id=OPEN_DAY_ANCHOR, target="_blank", href=""),
-            ]
-        ),
-        dcc.Graph(id=DETAILED_GRAPH, figure=create_empty_graph()),
-    ]
-)
+    ),
+    dhtml.Div(
+        [
+            dhtml.A("App loading...", id=OPEN_DAY_ANCHOR, target="_blank", href=""),
+        ]
+    ),
+    dcc.Graph(id=DETAILED_GRAPH, figure=create_empty_graph()),
+]
 
 
 @callback(
