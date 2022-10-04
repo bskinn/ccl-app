@@ -15,24 +15,27 @@ OUTPUT_SENDER_EMAIL = "output-sender-email"
 layout = [
     dcc.Markdown(
         id="body-block-1",
-        children="""\
+        children=dedent(
+            """
             # Extracting Data From CCL Pages
-            
+
             This is a first block of Markdown.
-            
+
             ***IT CAN BE FORMATTED!***
-            
-            This is a very long block of text that is being written to test just how wide
-            the rendering actually is for a block of Markdown. Partly, this is a test
-            to see how wide the rendering is going, to see if there's something
-            capping the width of the input box below, or if that's just something
-            I'll need to adjust in the config for that input control.
-            
+
+            This is a very long block of text that is being written to test just
+            how wide the rendering actually is for a block of Markdown. Partly,
+            this is a test to see how wide the rendering is going, to see if
+            there's something capping the width of the input box below, or if
+            that's just something I'll need to adjust in the config for that
+            input control.
+
             Yup. Need to change its width directly, looks like.
-            
+
             Enter a sender info chunk:
-            
-            """,
+
+            """
+        ),
     ),
     dcc.Input(
         id=INPUT_SENDER_INFO,

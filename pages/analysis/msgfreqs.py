@@ -101,7 +101,7 @@ def get_lowest_date_info(selected_data):
     except TypeError:  # selected_data is None
         return None, None, None
 
-    if len(pts):
+    if pts:
         d = min(p["x"] for p in pts)
 
         # Running the data points through `min` converts to yyyy-mm-dd strings
@@ -145,7 +145,7 @@ layout = dhtml.Div(
     ]
 )
 
-# Callback for populating the detailed plot
+
 @callback(
     Output(DETAILED_GRAPH, "figure"),
     Input(HIGH_LEVEL_GRAPH, "selectedData"),
@@ -154,10 +154,10 @@ def set_detail_figure(hi_data):
     """Populate the detailed figure from the high-level selection."""
     try:
         pts = hi_data["points"]
-    except:
+    except TypeError:  # hi_data is None
         return create_empty_graph()
 
-    if len(pts):
+    if pts:
         min_date = min(p["x"] for p in hi_data["points"])
         max_date = max(p["x"] for p in hi_data["points"])
 
@@ -174,8 +174,8 @@ def set_detail_figure(hi_data):
     else:
         # Filters that return *no* data, so the chart will be blank
         # whenever no selection has been made
-        min_date = 0
-        max_date = 1
+        min_date = pd.Timestamp(year=1990, month=12, day=1)
+        max_date = pd.Timestamp(year=1990, month=12, day=31)
 
     df = df_daily[df_daily["date"] >= min_date]
     df = df[df["date"] <= max_date]
@@ -183,29 +183,20 @@ def set_detail_figure(hi_data):
     return px.bar(df, x="date", y="count")
 
 
-# Callback for updating the outbound day-page anchor href
 @callback(
     Output(OPEN_DAY_ANCHOR, "href"),
-    Input(DETAILED_GRAPH, "selectedData"),
-)
-def update_day_page_anchor_href(detail_data):
-    year, month, day = get_lowest_date_info(detail_data)
-
-    if year:
-        return f"http://ccl.net/cgi-bin/ccl/day-index.cgi?{year}+{month:0>2}+{day:0>2}"
-    else:
-        return "http://ccl.net/chemistry/resources/messages/index.shtml"
-
-
-# Callback for updating the outbound day-page anchor text
-@callback(
     Output(OPEN_DAY_ANCHOR, "children"),
     Input(DETAILED_GRAPH, "selectedData"),
 )
-def update_day_page_anchor_text(detail_data):
+def update_day_page_anchor(detail_data):
+    """Update the link out to the CCL day page based on detail chart selection."""
     year, month, day = get_lowest_date_info(detail_data)
 
     if year:
-        return f"Open {year}-{month:0>2}-{day:0>2} on CCL"
+        href = f"http://ccl.net/cgi-bin/ccl/day-index.cgi?{year}+{month:0>2}+{day:0>2}"
+        text = f"Open {year}-{month:0>2}-{day:0>2} on CCL"
     else:
-        return dhtml.Em("(Nothing selected)")
+        href = "http://ccl.net/chemistry/resources/messages/index.shtml"
+        text = dhtml.Em("(Nothing selected)")
+
+    return href, text

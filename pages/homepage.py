@@ -11,13 +11,13 @@ layout = dcc.Markdown(
     children=dedent(
         """\
     # CCL Information and Exploration App
-    
+
     ## Information
     [Extracting Data from CCL Pages](/info/extract)
-    
+
     ## Exploration/Analysis
     [Message Posting Frequencies](/analysis/msgfreqs)
-    
+
     """
     ),
 )
