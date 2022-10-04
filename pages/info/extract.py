@@ -65,22 +65,11 @@ layout = [
 
 
 @callback(
+    Output(OUTPUT_SENDER_EMAIL, "children"),
     Output(OUTPUT_SENDER_NAME, "children"),
     Input(BTN_EXTRACT_SENDER_INFO, "n_clicks"),
     Input(INPUT_SENDER_INFO, "n_submit"),
     State(INPUT_SENDER_INFO, "value"),
 )
 def process_btn_extract_for_name(btn_clicks, input_submits, input_value):
-    _, name = extract_name_and_munged_email(input_value)
-    return name
-
-
-@callback(
-    Output(OUTPUT_SENDER_EMAIL, "children"),
-    Input(BTN_EXTRACT_SENDER_INFO, "n_clicks"),
-    Input(INPUT_SENDER_INFO, "n_submit"),
-    State(INPUT_SENDER_INFO, "value"),
-)
-def process_btn_extract_for_name(btn_clicks, input_submits, input_value):
-    email, _ = extract_name_and_munged_email(input_value)
-    return email
+    return extract_name_and_munged_email(input_value)
