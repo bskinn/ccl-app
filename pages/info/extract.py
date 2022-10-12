@@ -19,18 +19,27 @@ layout = [
             """
             # Extracting Data From CCL Pages
 
-            This is a first block of Markdown.
+            The first step in storing messages from CCL into a database is
+            scraping them from the CCL website itself.
 
-            ***IT CAN BE FORMATTED!***
+            This page describes the layout of the content on `ccl.net` itself,
+            and the methods used to scrape and extract that content into the
+            individual fields stored in the SQLite database.
 
-            This is a very long block of text that is being written to test just
-            how wide the rendering actually is for a block of Markdown. Partly,
-            this is a test to see how wide the rendering is going, to see if
-            there's something capping the width of the input box below, or if
-            that's just something I'll need to adjust in the config for that
-            input control.
+            ## Processing of Incoming Data
 
-            Yup. Need to change its width directly, looks like.
+            When a message is processed by the CCL server, it parses the header
+            and body, extracts a number of things, munges anything the the
+            header or body that looks like an email address, and then (i) queues
+            the email-munged message for distribution to the list, and (ii)
+            creates items/pages in the List Archive section of the site to
+            display the message publicly.
+
+            ## Layout of Content on `ccl.net`
+
+            ...
+
+            ----
 
             Enter a sender info chunk:
 
@@ -60,9 +69,11 @@ layout = [
     ),
     dcc.Markdown(
         id="body-block-2",
-        children="""\
-            This is a second block of Markdown.
-            """,
+        children=dedent(
+            """
+            *This is a second block of Markdown.*
+            """
+        ),
     ),
 ]
 
